@@ -1,18 +1,22 @@
 <?php
   // 連想配列
-  // echo $_POST['your_name'];
-  // var_dump($_POST['your_name']);
-  // var_dump($_POST['email']);
-  // var_dump($_POST['btn_confirm']);
-  // var_dump($_POST['btn_submit']);
+  echo $_POST['your_name'];
+  var_dump($_POST['your_name']);
+  var_dump($_POST['email']);
+  var_dump($_POST['btn_confirm']);
+  var_dump($_POST['btn_submit']);
+
+  require 'validation.php';
 
   function h($str)
   {
     return htmlspecialchars($str,ENT_QUOTES, 'UTF-8');
   }
 
+  $errors = validation($_POST);
+
   $pageFlag = 0;
-  if(!empty($_POST["btn_confirm"])){
+  if(!empty($_POST["btn_confirm"]) && empty($errors)){
     $pageFlag = 1;
   }
   if(!empty($_POST["btn_submit"])){
@@ -32,6 +36,15 @@
 
   <?php if($pageFlag === 0) : ?>
 
+  <?php if(!empty($errors) && !empty($_POST["btn_confirm"])) : ?>
+  <?php echo '<ul>' ;?>
+  <?php 
+    foreach($errors as $error){
+      echo '<li>' . $error . '</li>';
+    }
+  ?>
+  <?php echo '</ul>' ;?>
+  <?php endif ;?>
   入力画面
   <form method="POST" action="input.php">
   氏名
@@ -80,10 +93,36 @@
   Eメール
   <?php echo h($_POST['email']); ?>
   <br>
+  ホームページ
+  <?php echo h($_POST['url']); ?>
+  <br>
+  性別
+  <?php 
+  if($_POST['gender']=== '0'){echo "男性";}
+  if($_POST['gender']=== '1'){echo "女性";}
+  ?>
+  <br>
+  年齢
+  <?php 
+    if($_POST['age'] === '1'){echo '~19歳';}
+    if($_POST['age'] === '2'){echo '20~29歳';}
+    if($_POST['age'] === '3'){echo '30~39歳';}
+    if($_POST['age'] === '4'){echo '40~49歳';}
+    if($_POST['age'] === '5'){echo '50~59歳';}
+    if($_POST['age'] === '6'){echo '~60歳';}
+  ?>
+  <br>
+  お問い合わせ内容
+  <?php echo h($_POST['content']); ?>
+  <br>
   <input type="submit" name="btn_submit" value="送信する">
   <input type="submit" name="back" value="戻る">
   <input type="hidden" name="your_name" value="<?php echo h($_POST['your_name']); ?>">
   <input type="hidden" name="email" value="<?php echo h($_POST['email']); ?>">
+  <input type="hidden" name="gender" value="<?php echo h($_POST['gender']); ?>">
+  <input type="hidden" name="age" value="<?php echo h($_POST['age']); ?>">
+  <input type="hidden" name="content" value="<?php echo h($_POST['content']); ?>">
+  <input type="hidden" name="url" value="<?php echo h($_POST['url']); ?>">
   </form>
   <?php endif; ?>
 
