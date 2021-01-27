@@ -1,5 +1,4 @@
 <?php
-  // 連想配列
   echo $_POST['your_name'];
   var_dump($_POST['your_name']);
   var_dump($_POST['email']);
@@ -13,6 +12,7 @@
     return htmlspecialchars($str,ENT_QUOTES, 'UTF-8');
   }
 
+  // エラー文
   $errors = validation($_POST);
 
   $pageFlag = 0;
@@ -28,8 +28,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <title>form</title>
 </head>
 <body>
@@ -45,11 +49,13 @@
   ?>
   <?php echo '</ul>' ;?>
   <?php endif ;?>
-  入力画面
+  
   <form method="POST" action="input.php">
-  氏名
-  <input type="text" name="your_name" value="<?php if(!empty(h($_POST['your_name']))){echo h($_POST['your_name']);} ?>">
+  <div class="mb-3">
+  <label for="your_name" class="form-label">氏名</label>
+  <input type="text" name="your_name" id="your_name" class="form-control" value="<?php if(!empty(h($_POST['your_name']))){echo h($_POST['your_name']);} ?>">
   <br>
+  </div>
   Eメール
   <input type="email" name="email" value="<?php if(!empty(h($_POST['email']))){echo h($_POST['email']);} ?>">
   <br>
@@ -131,6 +137,8 @@
   <br>
   送信が完了しました。
   <?php endif; ?>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 </body>
 </html>
