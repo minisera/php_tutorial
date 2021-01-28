@@ -1,6 +1,24 @@
 <?php
-echo __FILE__;
-// /Applications/MAMP/htdocs/php_tutorial/mainte/test.php
 
-echo "<br>";
-echo(password_hash('password',PASSWORD_BCRYPT));
+$contactFile = '.contact.dat';
+
+// $fileContents = file_get_contents($contactFile); 
+
+// echo $fileContents;
+
+// // 上書き
+// file_put_contents($contactFile,"てすとですてすとです");
+
+// // 追記
+// file_put_contents($contactFile,"てすとですてすとです",FILE_APPEND);
+
+
+// ストリーム型でかく
+$contents = fopen($contactFile, 'a+');
+
+$addText = '１行追記' . "\n";
+
+fwrite($contents,$addText);
+
+fclose($contents);
+
